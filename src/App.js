@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
+import ToDo from './components/ToDo';
 
 function App() {
   return (
-    <div className="App">
-      Hello World!
+    <div className="Wrapper">
+      <ToDo />
     </div>
   );
 }
