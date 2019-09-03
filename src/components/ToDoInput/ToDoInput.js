@@ -1,19 +1,15 @@
 import React from "react";
 import "./ToDoInput.css";
 
-function ToDoInput(props) {
-  function handleChange(e) {
-    props.onChange(e.target.value);
-  }
-
+const ToDoInput = ({ onChange, value }) => {
   return (
     <input
       className="ToDo__input"
       type="text"
-      value={props.value}
-      onChange={handleChange}
+      value={value}
+      onChange={e => onChange(e.target.value)}
     />
   );
-}
+};
 
 export default ToDoInput;
