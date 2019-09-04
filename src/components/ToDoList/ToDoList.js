@@ -1,11 +1,11 @@
 import React from "react";
 import "./ToDoList.css";
 
-const ToDoList = ({ ToDoS }) => (
+const ToDoList = ({ todos }) => (
   <ol className="ToDo__list">
-    {ToDoS.map(item => (
-      <li className="ToDo__item" key={item.id}>
-        {item.value}
+    {todos.map(({id, value}) => (
+      <li className="ToDo__item" key={id}>
+        {value}
       </li>
     ))}
   </ol>

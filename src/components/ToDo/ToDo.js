@@ -8,7 +8,7 @@ class ToDo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ToDoS: [],
+      todos: [],
       value: "",
       id: 0
     };
@@ -21,33 +21,32 @@ class ToDo extends Component {
   }
 
   handleClick() {
-    if (!this.state.value) return false;
-
-    const { ToDoS, value, id } = this.state;
-    const ToDo = {
+    const { todos, value, id } = this.state;
+    const todo = {
       id: id,
       value: value
     };
-    
+
+    if (!value) return false;
+
     this.setState({
-      ToDoS: [...ToDoS, ToDo],
+      todos: [...todos, todo],
       value: "",
       id: id + 1
     });
-
-    console.log(this.state);
   }
 
-  render = () => (
-    <div className="ToDo">
-      <ToDoInput
-        value={this.state.value}
-        onChange={value => this.handleChange(value)}
-      />
-      <ToDoList ToDoS={this.state.ToDoS} />
-      <ToDoButton onClick={() => this.handleClick()} />
-    </div>
-  );
+  render() {
+    console.log(this.state);
+    const { todos, value } = this.state;
+    return (
+      <div className="ToDo">
+        <ToDoInput value={value} onChange={value => this.handleChange(value)} />
+        <ToDoList todos={todos} />
+        <ToDoButton onClick={() => this.handleClick()} />
+      </div>
+    );
+  }
 }
 
 export default ToDo;
