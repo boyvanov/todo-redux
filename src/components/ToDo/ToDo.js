@@ -1,16 +1,10 @@
 import React, { Component } from "react";
-import styled from "styled-components";
-// import "./styles";
-import ToDoInput from "../ToDoInput/ToDoInput";
-import ToDoButton from "../ToDoButton/ToDoButton";
-import ToDoList from "../ToDoList/ToDoList";
+import { StyledToDo } from "./styles";
+import { ToDoInput } from "../ToDoInput/ToDoInput";
+import { ToDoButton } from "../ToDoButton/ToDoButton";
+import { ToDoList } from "../ToDoList/ToDoList";
 
-const StyledToDo = styled.div`
-  padding: 20px 50px;
-  border: 1px solid black;
-`;
-
-class ToDo extends Component {
+export class ToDo extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,5 +47,3 @@ class ToDo extends Component {
     );
   }
 }
-
-export default ToDo;

@@ -1,12 +1,7 @@
 import React from "react";
-import styled from "styled-components";
-// import "./styles";
+import { Input } from "./styles";
 
-const Input = styled.input`
-  outline: none;
-`;
-
-const ToDoInput = ({ onChange, value }) => (
+export const ToDoInput = ({ onChange, value }) => (
   <Input
     className="todo__input"
     type="text"
@@ -14,5 +9,3 @@ const ToDoInput = ({ onChange, value }) => (
     onChange={e => onChange(e.target.value)}
   />
 );
-
-export default ToDoInput;
