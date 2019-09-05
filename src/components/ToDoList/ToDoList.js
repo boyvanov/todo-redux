@@ -1,14 +1,22 @@
 import React from "react";
-import "./ToDoList.css";
+import styled from "styled-components";
+// import "./styles";
+
+const Ol = styled.ol`
+  padding: 0 15px;
+  & .todo__item {
+    color: red;
+  }
+`;
 
 const ToDoList = ({ todos }) => (
-  <ol className="ToDo__list">
+  <Ol className="todo__list">
     {todos.map(({id, value}) => (
-      <li className="ToDo__item" key={id}>
+      <li className="todo__item" key={id}>
         {value}
       </li>
     ))}
-  </ol>
+  </Ol>
 );
 
 export default ToDoList;

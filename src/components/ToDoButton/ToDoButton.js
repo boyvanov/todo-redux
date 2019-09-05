@@ -1,10 +1,15 @@
 import React from "react";
-import "./ToDoButton.css";
+import styled from "styled-components";
+// import "./styles";
+
+const Button = styled.button`
+  padding: 5px;
+`;
 
 const ToDoButton = ({onClick}) => (
-  <button className="ToDo__button" type="button" onClick={onClick}>
+  <Button className="todo__button" type="button" onClick={onClick}>
     Добавить
-  </button>
+  </Button>
 );
 
 export default ToDoButton;

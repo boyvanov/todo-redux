@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import "./ToDo.css";
+import styled from "styled-components";
+// import "./styles";
 import ToDoInput from "../ToDoInput/ToDoInput";
 import ToDoButton from "../ToDoButton/ToDoButton";
 import ToDoList from "../ToDoList/ToDoList";
+
+const StyledToDo = styled.div`
+  padding: 20px 50px;
+  border: 1px solid black;
+`;
 
 class ToDo extends Component {
   constructor(props) {
@@ -37,14 +43,13 @@ class ToDo extends Component {
   }
 
   render() {
-    console.log(this.state);
     const { todos, value } = this.state;
     return (
-      <div className="ToDo">
+      <StyledToDo className="todo">
         <ToDoInput value={value} onChange={value => this.handleChange(value)} />
         <ToDoList todos={todos} />
         <ToDoButton onClick={() => this.handleClick()} />
-      </div>
+      </StyledToDo>
     );
   }
 }

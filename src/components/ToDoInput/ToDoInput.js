@@ -1,9 +1,14 @@
 import React from "react";
-import "./ToDoInput.css";
+import styled from "styled-components";
+// import "./styles";
+
+const Input = styled.input`
+  outline: none;
+`;
 
 const ToDoInput = ({ onChange, value }) => (
-  <input
-    className="ToDo__input"
+  <Input
+    className="todo__input"
     type="text"
     value={value}
     onChange={e => onChange(e.target.value)}
