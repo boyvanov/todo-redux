@@ -1,12 +1,9 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import { Wrapper } from "./stylesApp";
+import { ToDo } from "./components/ToDo/ToDo";
 
-function App() {
-  return (
-    <div className="App">
-      Hello World!
-    </div>
-  );
-}
-
-export default App;
+export const App = () => (
+  <Wrapper className="wrapper">
+    <ToDo />
+  </Wrapper>
+);
