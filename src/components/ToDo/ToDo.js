@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { StyledToDo } from "./styles";
 import { ToDoInput } from "../ToDoInput/ToDoInput";
-import { ToDoButton } from "../ToDoButton/ToDoButton";
 import { ToDoList } from "../ToDoList/ToDoList";
+import { StyledToDo } from "./styles";
 
 export class ToDo extends Component {
   constructor(props) {
@@ -39,10 +38,9 @@ export class ToDo extends Component {
   render() {
     const { todos, value } = this.state;
     return (
-      <StyledToDo className="todo">
+      <StyledToDo>
         <ToDoInput value={value} onChange={value => this.handleChange(value)} />
-        <ToDoList todos={todos} />
-        <ToDoButton onClick={() => this.handleClick()} />
+        <ToDoList todos={todos} onClick={() => this.handleClick()} />
       </StyledToDo>
     );
   }

@@ -1,11 +1,15 @@
 import React from "react";
-import { Input } from "./styles";
+import { ToDoInputWrap, Input } from "./styles";
 
 export const ToDoInput = ({ onChange, value }) => (
-  <Input
-    className="todo__input"
-    type="text"
-    value={value}
-    onChange={e => onChange(e.target.value)}
-  />
+  <ToDoInputWrap>
+    <Input
+      className="todo__input"
+      type="text"
+      placeholder="Todo Name"
+      autoFocus
+      value={value}
+      onChange={e => onChange(e.target.value)}
+    />
+  </ToDoInputWrap>
 );
