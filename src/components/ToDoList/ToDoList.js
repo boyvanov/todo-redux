@@ -1,31 +1,20 @@
 import React from "react";
 import { ToDoItem } from "../ToDoItem/ToDoItem";
 import { ToDoButton } from "../ToDoButton/ToDoButton";
-import {
-  ToDoListWrap,
-  Ul,
-  Content,
-  Footer,
-  FooterContent,
-  Counter,
-  Filter
-} from "./styles";
+import { Ul, Footer, Counter, Filter } from "./styles";
 
 export const ToDoList = ({ todos, onAddClick, onRemoveClick }) => (
-  <ToDoListWrap>
-    <Content>
-      <Ul>
-        {todos.map(({ id, value }) => (
-          <ToDoItem key={id} todo={value} onRemoveClick={onRemoveClick} />
-        ))}
-      </Ul>
-    </Content>
+  <div>
+    <Ul>
+      {todos.map(({ id, value }) => (
+        <ToDoItem key={id} todo={value} onRemoveClick={onRemoveClick} />
+      ))}
+    </Ul>
+
     <Footer>
-      <FooterContent>
-        <Counter />
-        <Filter />
-        <ToDoButton onAddClick={onAddClick} />
-      </FooterContent>
+      <Counter />
+      <Filter />
+      <ToDoButton onAddClick={onAddClick} />
     </Footer>
-  </ToDoListWrap>
+  </div>
 );

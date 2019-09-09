@@ -4,7 +4,7 @@ import { ToDo } from "./components/ToDo/ToDo";
 import { GlobalStyle } from "./stylesBase";
 
 export const App = () => (
-  <Wrapper className="wrapper">
+  <Wrapper>
     <GlobalStyle />
     <ToDo />
   </Wrapper>

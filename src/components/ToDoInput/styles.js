@@ -13,6 +13,3 @@ export const Input = styled.input`
   background: #fff;
 `;
 
-export const ToDoInputWrap = styled.div`
-  
-`;

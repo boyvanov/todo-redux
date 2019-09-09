@@ -19,34 +19,17 @@ export class ToDo extends Component {
     });
   }
 
-  handleAddClick() {
+  handleAddClickAndPressKey(key) {
     const { todos, value, id } = this.state;
+
+    if (!value) return false;
+
     const todo = {
       id: id,
       value: value
     };
 
-    if (!value) return false;
-
-    this.setState({
-      todos: [...todos, todo],
-      value: "",
-      id: id + 1
-    });
-  }
-
-  handleRemoveClick() {}
-
-  handleKeyPress(e) {
-    const { todos, value, id } = this.state;
-    const todo = {
-      id: id,
-      value: value
-    };
-
-    if (!value) return false;
-
-    if (e.key === "Enter") {
+    if (value || key === "Enter") {
       this.setState({
         todos: [...todos, todo],
         value: "",
@@ -55,6 +38,8 @@ export class ToDo extends Component {
     }
   }
 
+  handleRemoveClick() {}
+
   render() {
     const { todos, value } = this.state;
     return (
@@ -62,11 +47,11 @@ export class ToDo extends Component {
         <ToDoInput
           value={value}
           onChange={value => this.handleChange(value)}
-          onKeyPress={e => this.handleKeyPress(e)}
+          onKeyPress={key => this.handleAddClickAndPressKey(key)}
         />
         <ToDoList
           todos={todos}
-          onAddClick={() => this.handleAddClick()}
+          onAddClick={() => this.handleAddClickAndPressKey()}
           onRemoveClick={() => this.handleRemoveClick()}
         />
       </StyledToDo>

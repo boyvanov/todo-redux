@@ -1,16 +1,15 @@
 import React from "react";
-import { ToDoInputWrap, Input } from "./styles";
+import { Input } from "./styles";
 
 export const ToDoInput = ({ onChange, onKeyPress, value }) => (
-  <ToDoInputWrap>
+  <div>
     <Input
-      className="todo__input"
       type="text"
       placeholder="Todo Name"
       autoFocus
       value={value}
       onChange={e => onChange(e.target.value)}
-      onKeyPress={e => onKeyPress(e)}
+      onKeyPress={e => onKeyPress(e.key)}
     />
-  </ToDoInputWrap>
+  </div>
 );

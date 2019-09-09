@@ -5,8 +5,7 @@ export const Ul = styled.ul`
   border-bottom: 1px solid #ededed;
 `;
 
-export const ToDoListWrap = styled.div``;
-export const Content = styled.div``;
+
 export const Footer = styled.div`
   padding: 10px 15px;
   text-align: center;
@@ -27,6 +26,5 @@ export const Footer = styled.div`
       0 17px 2px -6px rgba(0, 0, 0, 0.2);
   }
 `;
-export const FooterContent = styled.div``;
 export const Counter = styled.div``;
 export const Filter = styled.div``;

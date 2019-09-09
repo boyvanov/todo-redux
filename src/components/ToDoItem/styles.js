@@ -23,7 +23,9 @@ export const Item = styled.div`
 export const Label = styled.label`
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex: 1;
+  cursor: pointer;
+  margin-right: 10px;
 `;
 
 export const CheckBlock = styled.div`
