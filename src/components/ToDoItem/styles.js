@@ -11,6 +11,8 @@ export const ItemWrap = styled.li`
 export const Item = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 10px;
   &:hover {
     .remove {
       visibility: visible;
@@ -18,11 +20,14 @@ export const Item = styled.div`
   }
 `;
 
-export const InputBlock = styled.div`
-  width: 60px;
+export const Label = styled.label`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const CheckBlock = styled.div`
+  width: 60px;
 `;
 
 export const RemoveButton = styled.button`

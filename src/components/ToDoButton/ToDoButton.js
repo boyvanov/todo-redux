@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "./styles";
+import { AddButton } from "./styles";
 
-export const ToDoButton = ({ onClick }) => (
-  <Button className="todo__button" type="button" onClick={onClick}>
+export const ToDoButton = ({ onAddClick }) => (
+  <AddButton className="todo__button" type="button" onClick={onAddClick}>
     Добавить
-  </Button>
+  </AddButton>
 );

@@ -8,6 +8,7 @@ body {
     -webkit-font-smoothing: antialiased;
     font-weight: 300;
     background: #f5f5f5;
+    color: #777;
   }
   
   ul {

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
+export const AddButton = styled.button`
   border: none;
   background: transparent;
   font-weight: 300;
@@ -9,4 +9,5 @@ export const Button = styled.button`
   border: 1px solid transparent;
   border-radius: 3px;
   outline: none;
+  font-size: 16px;
 `;

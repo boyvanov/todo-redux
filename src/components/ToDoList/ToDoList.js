@@ -11,12 +11,12 @@ import {
   Filter
 } from "./styles";
 
-export const ToDoList = ({ todos, onClick }) => (
+export const ToDoList = ({ todos, onAddClick, onRemoveClick }) => (
   <ToDoListWrap>
     <Content>
       <Ul>
         {todos.map(({ id, value }) => (
-          <ToDoItem key={id} todo={value} />
+          <ToDoItem key={id} todo={value} onRemoveClick={onRemoveClick} />
         ))}
       </Ul>
     </Content>
@@ -24,7 +24,7 @@ export const ToDoList = ({ todos, onClick }) => (
       <FooterContent>
         <Counter />
         <Filter />
-        <ToDoButton onClick={onClick} />
+        <ToDoButton onAddClick={onAddClick} />
       </FooterContent>
     </Footer>
   </ToDoListWrap>

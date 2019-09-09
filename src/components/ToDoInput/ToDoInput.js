@@ -1,7 +1,7 @@
 import React from "react";
 import { ToDoInputWrap, Input } from "./styles";
 
-export const ToDoInput = ({ onChange, value }) => (
+export const ToDoInput = ({ onChange, onKeyPress, value }) => (
   <ToDoInputWrap>
     <Input
       className="todo__input"
@@ -10,6 +10,7 @@ export const ToDoInput = ({ onChange, value }) => (
       autoFocus
       value={value}
       onChange={e => onChange(e.target.value)}
+      onKeyPress={e => onKeyPress(e)}
     />
   </ToDoInputWrap>
 );

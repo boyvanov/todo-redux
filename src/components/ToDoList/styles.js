@@ -8,7 +8,6 @@ export const Ul = styled.ul`
 export const ToDoListWrap = styled.div``;
 export const Content = styled.div``;
 export const Footer = styled.div`
-  color: #777;
   padding: 10px 15px;
   text-align: center;
   position: relative;

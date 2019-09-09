@@ -1,16 +1,18 @@
 import React from "react";
-import { ItemWrap, Item, InputBlock, RemoveButton } from "./styles";
+import { ItemWrap, Item, CheckBlock, RemoveButton, Label } from "./styles";
 
-export const ToDoItem = ({ todo }) => (
+export const ToDoItem = ({ todo, onRemoveClick }) => (
   <ItemWrap>
     <Item>
-      <label>
-        <InputBlock>
+      <Label>
+        <CheckBlock>
           <input type="checkbox" />
-        </InputBlock>
+        </CheckBlock>
         <div>{todo}</div>
-      </label>
-      <RemoveButton className="remove" type="button">X</RemoveButton>
+      </Label>
+      <RemoveButton className="remove" type="button" onClick={onRemoveClick}>
+        X
+      </RemoveButton>
     </Item>
   </ItemWrap>
 );
