@@ -1,44 +1,48 @@
-import React, { Component } from "react";
-import { ToDoInput } from "../ToDoInput/ToDoInput";
-import { ToDoList } from "../ToDoList/ToDoList";
-import { StyledToDo } from "./styles";
+import React, { Component } from 'react';
+import { ToDoInput } from '../ToDoInput/ToDoInput';
+import { ToDoList } from '../ToDoList/ToDoList';
+import { StyledToDo } from './styles';
 
 export class ToDo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       todos: [],
-      value: "",
+      value: '',
       id: 0
     };
   }
 
   handleChange(value) {
     this.setState({
-      value: value
+      value
     });
   }
 
-  handleAddClickAndPressKey(key) {
+  handleAddClickAndPressKey(e) {
+    e.preventDefault();
     const { todos, value, id } = this.state;
 
     if (!value) return false;
 
     const todo = {
-      id: id,
-      value: value
+      id,
+      value
     };
 
-    if (value || key === "Enter") {
-      this.setState({
-        todos: [...todos, todo],
-        value: "",
-        id: id + 1
-      });
-    }
+    this.setState({
+      todos: [...todos, todo],
+      value: '',
+      id: id + 1
+    });
   }
 
-  handleRemoveClick() {}
+  handleRemoveClick(itemId) {
+    const { todos } = this.state;
+    this.setState({
+      todos: todos.filter(({ id }) => id !== itemId)
+    });
+  }
 
   render() {
     const { todos, value } = this.state;
@@ -46,13 +50,13 @@ export class ToDo extends Component {
       <StyledToDo>
         <ToDoInput
           value={value}
-          onChange={value => this.handleChange(value)}
-          onKeyPress={key => this.handleAddClickAndPressKey(key)}
+          onChange={val => this.handleChange(val)}
+          onAddClick={e => this.handleAddClickAndPressKey(e)}
+          onSubmit={e => this.handleAddClickAndPressKey(e)}
         />
         <ToDoList
           todos={todos}
-          onAddClick={() => this.handleAddClickAndPressKey()}
-          onRemoveClick={() => this.handleRemoveClick()}
+          onRemoveClick={id => this.handleRemoveClick(id)}
         />
       </StyledToDo>
     );

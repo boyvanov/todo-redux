@@ -1,20 +1,35 @@
-import React from "react";
-import { ToDoItem } from "../ToDoItem/ToDoItem";
-import { ToDoButton } from "../ToDoButton/ToDoButton";
-import { Ul, Footer, Counter, Filter } from "./styles";
+import React from 'react';
+import { shape, string, number, func, arrayOf } from 'prop-types';
+import { ToDoItem } from '../ToDoItem/ToDoItem';
 
-export const ToDoList = ({ todos, onAddClick, onRemoveClick }) => (
+import { Ul, Footer, Counter, Filter } from './styles';
+
+export const ToDoList = ({ todos, onRemoveClick }) => (
   <div>
     <Ul>
       {todos.map(({ id, value }) => (
-        <ToDoItem key={id} todo={value} onRemoveClick={onRemoveClick} />
+        <ToDoItem
+          key={id}
+          value={value}
+          id={id}
+          onRemoveClick={onRemoveClick}
+        />
       ))}
     </Ul>
 
     <Footer>
       <Counter />
       <Filter />
-      <ToDoButton onAddClick={onAddClick} />
     </Footer>
   </div>
 );
+
+ToDoList.propTypes = {
+  todos: arrayOf(
+    shape({
+      id: number,
+      value: string
+    })
+  ).isRequired,
+  onRemoveClick: func.isRequired
+};

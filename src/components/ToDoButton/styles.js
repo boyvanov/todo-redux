@@ -10,4 +10,5 @@ export const AddButton = styled.button`
   border-radius: 3px;
   outline: none;
   font-size: 16px;
+  padding: 20px;
 `;

@@ -9,7 +9,11 @@ export const Input = styled.input`
   line-height: 1.4em;
   outline: none;
   color: inherit;
-  width: 100%;
+  flex: 1;
   background: #fff;
 `;
 
+export const Form = styled.form`
+  display: flex;
+  align-items: center;
+`;
