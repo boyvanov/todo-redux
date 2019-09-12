@@ -9,7 +9,8 @@ export class ToDo extends Component {
     this.state = {
       todos: [],
       value: '',
-      id: 0
+      id: 0,
+      checked: false
     };
   }
 
@@ -19,15 +20,29 @@ export class ToDo extends Component {
     });
   }
 
+  handleChecked(itemId) {
+    const { todos } = this.state;
+    this.setState({
+      todos: todos.map(({ id, value, checked }) => {
+        return {
+          id,
+          value,
+          checked: id === itemId ? !checked : checked
+        };
+      })
+    });
+  }
+
   handleAddClickAndPressKey(e) {
     e.preventDefault();
-    const { todos, value, id } = this.state;
+    const { todos, value, id, checked } = this.state;
 
     if (!value) return false;
 
     const todo = {
       id,
-      value
+      value,
+      checked
     };
 
     this.setState({
@@ -57,6 +72,7 @@ export class ToDo extends Component {
         <ToDoList
           todos={todos}
           onRemoveClick={id => this.handleRemoveClick(id)}
+          onChecked={id => this.handleChecked(id)}
         />
       </StyledToDo>
     );

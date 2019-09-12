@@ -1,10 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Ul = styled.ul`
   font-size: 24px;
   border-bottom: 1px solid #ededed;
 `;
-
 
 export const Footer = styled.div`
   padding: 10px 15px;
@@ -14,7 +13,7 @@ export const Footer = styled.div`
   padding-bottom: 20px;
 
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     right: 0;
     bottom: 0;

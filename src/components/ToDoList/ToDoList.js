@@ -1,18 +1,20 @@
 import React from 'react';
-import { shape, string, number, func, arrayOf } from 'prop-types';
+import { shape, string, number, func, arrayOf, bool } from 'prop-types';
 import { ToDoItem } from '../ToDoItem/ToDoItem';
 
 import { Ul, Footer, Counter, Filter } from './styles';
 
-export const ToDoList = ({ todos, onRemoveClick }) => (
+export const ToDoList = ({ todos, onRemoveClick, onChecked }) => (
   <div>
     <Ul>
-      {todos.map(({ id, value }) => (
+      {todos.map(({ id, value, checked }) => (
         <ToDoItem
           key={id}
           value={value}
           id={id}
+          checked={checked}
           onRemoveClick={onRemoveClick}
+          onChecked={onChecked}
         />
       ))}
     </Ul>
@@ -28,8 +30,10 @@ ToDoList.propTypes = {
   todos: arrayOf(
     shape({
       id: number,
-      value: string
+      value: string,
+      checked: bool
     })
   ).isRequired,
-  onRemoveClick: func.isRequired
+  onRemoveClick: func.isRequired,
+  onChecked: func.isRequired
 };

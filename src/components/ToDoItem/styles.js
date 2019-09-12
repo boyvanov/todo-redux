@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ItemWrap = styled.li`
   border-bottom: 1px solid #ededed;
