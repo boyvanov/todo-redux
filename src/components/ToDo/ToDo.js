@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ToDoInput } from '../ToDoInput/ToDoInput';
-import { ToDoList } from '../ToDoList/ToDoList';
+import { ToDoInput } from '../todo-input/todo-input';
+import { ToDoList } from '../todo-list/todo-list';
 import { StyledToDo } from './styles';
 
 export class ToDo extends Component {
@@ -8,16 +8,9 @@ export class ToDo extends Component {
     super(props);
     this.state = {
       todos: [],
-      value: '',
       id: 0,
       checked: false
     };
-  }
-
-  handleChange(value) {
-    this.setState({
-      value
-    });
   }
 
   handleChecked(itemId) {
@@ -33,9 +26,10 @@ export class ToDo extends Component {
     });
   }
 
-  handleAddClickAndPressKey(e) {
+  handleAddClickAndPressKey(e, value) {
     e.preventDefault();
-    const { todos, value, id, checked } = this.state;
+
+    const { todos, id, checked } = this.state;
 
     if (!value) return false;
 
@@ -47,7 +41,6 @@ export class ToDo extends Component {
 
     this.setState({
       todos: [...todos, todo],
-      value: '',
       id: id + 1
     });
   }
@@ -60,14 +53,12 @@ export class ToDo extends Component {
   }
 
   render() {
-    const { todos, value } = this.state;
+    const { todos } = this.state;
     return (
       <StyledToDo>
         <ToDoInput
-          value={value}
-          onChange={val => this.handleChange(val)}
-          onAddClick={e => this.handleAddClickAndPressKey(e)}
-          onSubmit={e => this.handleAddClickAndPressKey(e)}
+          onAddClick={(e, value) => this.handleAddClickAndPressKey(e, value)}
+          onSubmit={(e, value) => this.handleAddClickAndPressKey(e, value)}
         />
         <ToDoList
           todos={todos}

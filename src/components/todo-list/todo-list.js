@@ -1,7 +1,6 @@
 import React from 'react';
 import { shape, string, number, func, arrayOf, bool } from 'prop-types';
-import { ToDoItem } from '../ToDoItem/ToDoItem';
-
+import { ToDoItem } from '../todo-item/todo-item';
 import { Ul, Footer, Counter, Filter } from './styles';
 
 export const ToDoList = ({ todos, onRemoveClick, onChecked }) => (
