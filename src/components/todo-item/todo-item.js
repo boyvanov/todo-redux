@@ -1,11 +1,18 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { func, string, number, bool } from 'prop-types';
 import { ItemWrap, Item, CheckBlock, RemoveButton, Label } from './styles';
 
-export class ToDoItem extends PureComponent {
+export class ToDoItem extends Component {
+  shouldComponentUpdate(nextProps) {
+    const { checked } = this.props;
+
+    return checked !== nextProps.checked;
+  }
+
   render() {
     const { value, id, checked, onRemoveClick, onChecked } = this.props;
     console.log('render');
+
     return (
       <ItemWrap>
         <Item>
