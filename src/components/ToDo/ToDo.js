@@ -1,48 +1,70 @@
-import React, { Component } from "react";
-import { StyledToDo } from "./styles";
-import { ToDoInput } from "../ToDoInput/ToDoInput";
-import { ToDoButton } from "../ToDoButton/ToDoButton";
-import { ToDoList } from "../ToDoList/ToDoList";
+import React, { Component } from 'react';
+import { ToDoInput } from '../todo-input/todo-input';
+import { ToDoList } from '../todo-list/todo-list';
+import { StyledToDo } from './styles';
 
 export class ToDo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       todos: [],
-      value: "",
-      id: 0
+      id: 0,
+      checked: false
     };
   }
 
-  handleChange(value) {
+  handleChecked(itemId) {
+    const { todos } = this.state;
     this.setState({
-      value: value
+      todos: todos.map(({ id, value, checked }) => {
+        return {
+          id,
+          value,
+          checked: id === itemId ? !checked : checked
+        };
+      })
     });
   }
 
-  handleClick() {
-    const { todos, value, id } = this.state;
-    const todo = {
-      id: id,
-      value: value
-    };
+  handleAddClickAndPressKey(e, value) {
+    e.preventDefault();
+
+    const { todos, id, checked } = this.state;
 
     if (!value) return false;
 
+    const todo = {
+      id,
+      value,
+      checked
+    };
+
     this.setState({
       todos: [...todos, todo],
-      value: "",
       id: id + 1
     });
   }
 
+  handleRemoveClick(itemId) {
+    const { todos } = this.state;
+    this.setState({
+      todos: todos.filter(({ id }) => id !== itemId)
+    });
+  }
+
   render() {
-    const { todos, value } = this.state;
+    const { todos } = this.state;
     return (
-      <StyledToDo className="todo">
-        <ToDoInput value={value} onChange={value => this.handleChange(value)} />
-        <ToDoList todos={todos} />
-        <ToDoButton onClick={() => this.handleClick()} />
+      <StyledToDo>
+        <ToDoInput
+          onAddClick={(e, value) => this.handleAddClickAndPressKey(e, value)}
+          onSubmit={(e, value) => this.handleAddClickAndPressKey(e, value)}
+        />
+        <ToDoList
+          todos={todos}
+          onRemoveClick={id => this.handleRemoveClick(id)}
+          onChecked={id => this.handleChecked(id)}
+        />
       </StyledToDo>
     );
   }

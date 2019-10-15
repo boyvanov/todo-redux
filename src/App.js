@@ -1,9 +1,11 @@
-import React from "react";
-import { Wrapper } from "./stylesApp";
-import { ToDo } from "./components/ToDo/ToDo";
+import React from 'react';
+import { Wrapper } from './stylesApp';
+import { ToDo } from './components/todo/todo';
+import { GlobalStyle } from './stylesBase';
 
 export const App = () => (
-  <Wrapper className="wrapper">
+  <Wrapper>
+    <GlobalStyle />
     <ToDo />
   </Wrapper>
 );
