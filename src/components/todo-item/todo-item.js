@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import { func, string, number, bool } from 'prop-types';
-import { ItemWrap, Item, CheckBlock, RemoveButton, Label } from './styles';
+import {
+  ItemWrap,
+  Item,
+  CheckBlock,
+  RemoveButton,
+  Label,
+  Text
+} from './styles';
 
 export class ToDoItem extends Component {
   shouldComponentUpdate(nextProps) {
-    const { checked } = this.props;
+    const { isCompleted } = this.props;
 
-    return checked !== nextProps.checked;
+    return isCompleted !== nextProps.isCompleted;
   }
 
   render() {
-    const { value, id, checked, onRemoveClick, onChecked } = this.props;
-    console.log('render');
+    const { text, id, isCompleted, removeTodo, completeTodo } = this.props;
 
     return (
       <ItemWrap>
@@ -20,16 +26,16 @@ export class ToDoItem extends Component {
             <CheckBlock>
               <input
                 type="checkbox"
-                checked={checked}
-                onChange={() => onChecked(id)}
+                checked={isCompleted}
+                onChange={() => completeTodo(id)}
               />
             </CheckBlock>
-            <div>{value}</div>
+            <Text className={isCompleted ? 'cross' : ''}>{text}</Text>
           </Label>
           <RemoveButton
             className="remove"
             type="button"
-            onClick={() => onRemoveClick(id)}
+            onClick={() => removeTodo(id)}
           >
             X
           </RemoveButton>
@@ -40,46 +46,9 @@ export class ToDoItem extends Component {
 }
 
 ToDoItem.propTypes = {
-  value: string.isRequired,
-  checked: bool.isRequired,
+  text: string.isRequired,
+  isCompleted: bool.isRequired,
   id: number.isRequired,
-  onRemoveClick: func.isRequired,
-  onChecked: func.isRequired
+  removeTodo: func.isRequired,
+  completeTodo: func.isRequired
 };
-
-// function ToDoItem({ value, id, checked, onRemoveClick, onChecked }) {
-//   console.log('render');
-//   return (
-//     <ItemWrap>
-//       <Item>
-//         <Label>
-//           <CheckBlock>
-//             <input
-//               type="checkbox"
-//               checked={checked}
-//               onChange={() => onChecked(id)}
-//             />
-//           </CheckBlock>
-//           <div>{value}</div>
-//         </Label>
-//         <RemoveButton
-//           className="remove"
-//           type="button"
-//           onClick={() => onRemoveClick(id)}
-//         >
-//           X
-//         </RemoveButton>
-//       </Item>
-//     </ItemWrap>
-//   );
-// }
-
-// ToDoItem.propTypes = {
-//   value: string.isRequired,
-//   checked: bool.isRequired,
-//   id: number.isRequired,
-//   onRemoveClick: func.isRequired,
-//   onChecked: func.isRequired
-// };
-
-// export const ItemMemo = memo(ToDoItem);
