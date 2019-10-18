@@ -4,7 +4,7 @@ import { AddButton } from './styles';
 
 export const ToDoButton = ({ onClick }) => (
   <AddButton type="button" onClick={e => onClick(e)}>
-    Добавить
+    Add
   </AddButton>
 );
 

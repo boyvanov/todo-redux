@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, arrayOf, object } from 'prop-types';
-import { addTodo, removeTodo, completeTodo } from '../../actions/actionCreator';
+import {
+  addTodo,
+  removeTodo,
+  completeTodo,
+  changeFilter
+} from '../../actions/actionCreator';
 import { ToDoInput } from '../../components/todo-input/todo-input';
 import { ToDoList } from '../../components/todo-list/todo-list';
 import { Footer } from '../../components/footer/footer';
@@ -36,10 +41,32 @@ class ToDo extends Component {
     });
   };
 
+  filterTodos = (todos, activeFilter) => {
+    switch (activeFilter) {
+      case 'completed':
+        return todos.filter(todo => todo.isCompleted);
+      case 'active':
+        return todos.filter(todo => !todo.isCompleted);
+      default:
+        return todos;
+    }
+  };
+
+  getActiveTodosCounter = todos =>
+    todos.filter(todo => !todo.isCompleted).length;
+
   render() {
-    const { todos, removeTodo, completeTodo } = this.props;
+    const {
+      todos,
+      removeTodo,
+      completeTodo,
+      filter,
+      changeFilter
+    } = this.props;
     const { todoText } = this.state;
     const isTodosExist = todos && todos.length > 0;
+    const filteredTodos = this.filterTodos(todos, filter);
+    const todosCounter = this.getActiveTodosCounter(todos);
 
     return (
       <StyledToDo>
@@ -50,14 +77,21 @@ class ToDo extends Component {
         />
         {isTodosExist && (
           <ToDoList
-            todos={todos}
+            todos={filteredTodos}
             onRemoveClick={this.handleRemoveClick}
             onChecked={this.handleChecked}
             removeTodo={removeTodo}
             completeTodo={completeTodo}
           />
         )}
-        {<Footer isTodosExist={isTodosExist} />}
+        {
+          <Footer
+            isTodosExist={isTodosExist}
+            activeFilter={filter}
+            changeFilter={changeFilter}
+            amount={todosCounter}
+          />
+        }
       </StyledToDo>
     );
   }
@@ -65,9 +99,10 @@ class ToDo extends Component {
 
 export default connect(
   state => ({
-    todos: state.todos
+    todos: state.todos,
+    filter: state.filter
   }),
-  { addTodo, removeTodo, completeTodo }
+  { addTodo, removeTodo, completeTodo, changeFilter }
 )(ToDo);
 
 ToDo.propTypes = {
