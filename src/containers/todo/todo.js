@@ -1,44 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { func, arrayOf, object } from 'prop-types';
+import { func, arrayOf, object, string } from 'prop-types';
 import {
   addTodo,
   removeTodo,
   completeTodo,
-  changeFilter
-} from '../../actions/actionCreator';
-import { ToDoInput } from '../../components/todo-input/todo-input';
+  changeFilter,
+  cleanInput
+} from '../../actions/todo';
+import { ToDoinput } from '../../components/todo-input/todo-input';
 import { ToDoList } from '../../components/todo-list/todo-list';
 import { Footer } from '../../components/footer/footer';
 import { StyledToDo } from './styles';
 
 class ToDo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todoText: ''
-    };
-  }
-
-  handleInputChange = ({ target: { value } }) => {
-    this.setState({
-      todoText: value
-    });
-  };
-
   handleAddClickAndPressKey = e => {
     e.preventDefault();
 
-    const { todoText } = this.state;
-    const { addTodo } = this.props;
+    const { addTodo, inputText, cleanInput } = this.props;
 
-    if (!todoText) return;
+    if (!inputText) return;
 
-    addTodo(new Date().getTime(), todoText, false);
-
-    this.setState({
-      todoText: ''
-    });
+    addTodo(new Date().getTime(), inputText, false);
+    cleanInput();
   };
 
   filterTodos = (todos, activeFilter) => {
@@ -52,8 +36,7 @@ class ToDo extends Component {
     }
   };
 
-  getActiveTodosCounter = todos =>
-    todos.filter(todo => !todo.isCompleted).length;
+  getTodosActiveCount = todos => todos.filter(todo => !todo.isCompleted).length;
 
   render() {
     const {
@@ -63,18 +46,13 @@ class ToDo extends Component {
       filter,
       changeFilter
     } = this.props;
-    const { todoText } = this.state;
     const isTodosExist = todos && todos.length > 0;
     const filteredTodos = this.filterTodos(todos, filter);
-    const todosCounter = this.getActiveTodosCounter(todos);
+    const todosCounter = this.getTodosActiveCount(todos);
 
     return (
       <StyledToDo>
-        <ToDoInput
-          onAdd={this.handleAddClickAndPressKey}
-          onChange={this.handleInputChange}
-          todoText={todoText}
-        />
+        <ToDoinput onAdd={this.handleAddClickAndPressKey} />
         {isTodosExist && (
           <ToDoList
             todos={filteredTodos}
@@ -97,16 +75,18 @@ class ToDo extends Component {
   }
 }
 
-export default connect(
+export const Todo = connect(
   state => ({
     todos: state.todos,
-    filter: state.filter
+    filter: state.filter,
+    inputText: state.inputText
   }),
-  { addTodo, removeTodo, completeTodo, changeFilter }
+  { addTodo, removeTodo, completeTodo, changeFilter, cleanInput }
 )(ToDo);
 
 ToDo.propTypes = {
   todos: arrayOf(object).isRequired,
+  filter: string.isRequired,
   addTodo: func.isRequired,
   removeTodo: func.isRequired,
   completeTodo: func.isRequired

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 body {
@@ -24,4 +24,9 @@ body {
   * {
     box-sizing: border-box;
   }
+`;
+
+export const Wrapper = styled.div`
+  width: 600px;
+  margin: 0 auto;
 `;

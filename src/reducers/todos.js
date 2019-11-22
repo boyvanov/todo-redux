@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { load } from 'redux-localstorage-simple';
-import { ADD_TODO, REMOVE_TODO, COMPLETE_TODO } from '../constants';
+import { ADD_TODO, REMOVE_TODO, COMPLETE_TODO } from '../actions/todo';
 
 let TODOS = load({ namespace: 'todo-list' });
 
@@ -10,22 +10,22 @@ if (!TODOS || !TODOS.todos || !TODOS.todos.length) {
   };
 }
 
-export const todos = (state = TODOS.todos, action) => {
-  switch (action.type) {
+export const todos = (state = TODOS.todos, { type, id, text, isCompleted }) => {
+  switch (type) {
     case ADD_TODO:
       return [
         ...state,
         {
-          id: action.id,
-          text: action.text,
-          isCompleted: action.isCompleted
+          id,
+          text,
+          isCompleted
         }
       ];
     case REMOVE_TODO:
-      return [...state].filter(todo => todo.id !== action.id);
+      return state.filter(todo => todo.id !== id);
     case COMPLETE_TODO:
-      return [...state].map(todo => {
-        if (todo.id === action.id) {
+      return state.map(todo => {
+        if (todo.id === id) {
           todo.isCompleted = !todo.isCompleted;
         }
         return todo;

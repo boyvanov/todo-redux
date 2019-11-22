@@ -1,21 +1,7 @@
 import React from 'react';
 import { number, bool, string, func } from 'prop-types';
 import { FooterWrap, Counter, Filter, Btn } from './styles';
-
-const FILTER_BTNS = [
-  {
-    text: 'All',
-    id: 'all'
-  },
-  {
-    text: 'Active',
-    id: 'active'
-  },
-  {
-    text: 'Completed',
-    id: 'completed'
-  }
-];
+import { FILTER_BTNS } from './constants';
 
 export const Footer = ({
   isTodosExist,

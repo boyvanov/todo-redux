@@ -2,8 +2,10 @@ import {
   ADD_TODO,
   REMOVE_TODO,
   COMPLETE_TODO,
-  CHANGE_FILTER
-} from '../constants';
+  CHANGE_FILTER,
+  CHANGE_INPUT,
+  CLEAN_INPUT
+} from './constants';
 
 export const addTodo = (id, text, isCompleted) => ({
   type: ADD_TODO,
@@ -25,4 +27,13 @@ export const completeTodo = id => ({
 export const changeFilter = activeFilter => ({
   type: CHANGE_FILTER,
   activeFilter
+});
+
+export const changeInput = value => ({
+  type: CHANGE_INPUT,
+  value
+});
+
+export const cleanInput = () => ({
+  type: CLEAN_INPUT
 });
