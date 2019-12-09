@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, arrayOf, object, string } from 'prop-types';
-import {
-  addTodo,
-  removeTodo,
-  completeTodo,
-  changeFilter,
-  cleanInput
-} from '../../actions/todo';
-import { ToDoinput } from '../../components/todo-input/todo-input';
+import { addTodo, changeFilter, cleanInput } from '../../actions/todo';
+import { TodoInput } from '../../components/todo-input/todo-input';
 import { ToDoList } from '../../components/todo-list/todo-list';
 import { Footer } from '../../components/footer/footer';
 import { StyledToDo } from './styles';
@@ -26,27 +20,13 @@ class ToDo extends Component {
   };
 
   render() {
-    const {
-      state,
-      todos,
-      filter,
-      count,
-      removeTodo,
-      completeTodo,
-      changeFilter
-    } = this.props;
+    const { state, todos, filter, count, changeFilter } = this.props;
     const isTodosExist = state.todos && state.todos.length > 0;
 
     return (
       <StyledToDo>
-        <ToDoinput onAdd={this.handleAddClickAndPressKey} />
-        {isTodosExist && (
-          <ToDoList
-            todos={todos}
-            removeTodo={removeTodo}
-            completeTodo={completeTodo}
-          />
-        )}
+        <TodoInput onAdd={this.handleAddClickAndPressKey} />
+        {isTodosExist && <ToDoList todos={todos} />}
         <Footer
           isTodosExist={isTodosExist}
           activeFilter={filter}
@@ -59,33 +39,32 @@ class ToDo extends Component {
 }
 
 const mapStateToProps = state => {
+  const { todos, filter, inputText } = state;
   const filteredTodos = () => {
-    switch (state.filter) {
+    switch (filter) {
       case 'completed':
-        return state.todos.filter(todo => todo.isCompleted);
+        return todos.filter(todo => todo.isCompleted);
       case 'active':
-        return state.todos.filter(todo => !todo.isCompleted);
+        return todos.filter(todo => !todo.isCompleted);
       default:
-        return state.todos;
+        return todos;
     }
   };
 
   const getTodosActiveCount = () =>
-    state.todos.filter(todo => !todo.isCompleted).length;
+    todos.filter(todo => !todo.isCompleted).length;
 
   return {
-    state: state,
+    state,
     todos: filteredTodos(),
-    filter: state.filter,
+    filter,
     count: getTodosActiveCount(),
-    inputText: state.inputText
+    inputText
   };
 };
 
 const mapDispatchToProps = {
   addTodo,
-  removeTodo,
-  completeTodo,
   changeFilter,
   cleanInput
 };
@@ -107,7 +86,5 @@ export const Todo = connect(
 ToDo.propTypes = {
   todos: arrayOf(object).isRequired,
   filter: string.isRequired,
-  addTodo: func.isRequired,
-  removeTodo: func.isRequired,
-  completeTodo: func.isRequired
+  addTodo: func.isRequired
 };

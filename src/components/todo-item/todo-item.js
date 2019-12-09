@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import { func, string, number, bool } from 'prop-types';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { func, string, number, bool, shape } from 'prop-types';
+import { removeTodo, completeTodo } from '../../actions/todo';
 import {
   ItemWrap,
   Item,
@@ -9,15 +11,9 @@ import {
   Text
 } from './styles';
 
-export class ToDoItem extends Component {
-  shouldComponentUpdate(nextProps) {
-    const { isCompleted } = this.props;
-
-    return isCompleted !== nextProps.isCompleted;
-  }
-
+class ToDoItem extends PureComponent {
   render() {
-    const { text, id, isCompleted, removeTodo, completeTodo } = this.props;
+    const { todo, removeTodo, completeTodo } = this.props;
 
     return (
       <ItemWrap>
@@ -26,16 +22,16 @@ export class ToDoItem extends Component {
             <CheckBlock>
               <input
                 type="checkbox"
-                checked={isCompleted}
-                onChange={() => completeTodo(id)}
+                checked={todo.isCompleted}
+                onChange={() => completeTodo(todo.id)}
               />
             </CheckBlock>
-            <Text className={isCompleted ? 'cross' : ''}>{text}</Text>
+            <Text className={todo.isCompleted ? 'cross' : ''}>{todo.text}</Text>
           </Label>
           <RemoveButton
             className="remove"
             type="button"
-            onClick={() => removeTodo(id)}
+            onClick={() => removeTodo(todo.id)}
           >
             X
           </RemoveButton>
@@ -45,10 +41,37 @@ export class ToDoItem extends Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  const { id } = ownProps;
+  const { todos } = state;
+  const findTodo = () => {
+    return todos.find(todo => todo.id === id);
+  };
+
+  return {
+    todo: findTodo(),
+    isCompleted: findTodo().isCompleted
+  };
+};
+
+const mapDispatchToProps = {
+  removeTodo,
+  completeTodo
+};
+
+export const TodoItem = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToDoItem);
+
 ToDoItem.propTypes = {
-  text: string.isRequired,
-  isCompleted: bool.isRequired,
+  todo: shape({
+    id: number,
+    text: string,
+    isCompleted: bool
+  }).isRequired,
   id: number.isRequired,
+  isCompleted: bool.isRequired,
   removeTodo: func.isRequired,
   completeTodo: func.isRequired
 };

@@ -24,7 +24,7 @@ class ToDoInput extends PureComponent {
   }
 }
 
-export const ToDoinput = connect(
+export const TodoInput = connect(
   state => ({
     inputText: state.inputText
   }),
