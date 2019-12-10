@@ -1,59 +1,42 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { func } from 'prop-types';
 import { ToDoButton } from '../todo-button/todo-button';
 import { Input, Form } from './styles';
+import { store } from '../../store';
+import { changeInput } from '../../actions/todo';
 
-export class ToDoInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: ''
-    };
+export class TodoInput extends PureComponent {
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(() => this.forceUpdate());
   }
 
-  handleChange(value) {
-    this.setState({
-      value
-    });
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
-  removeInputValue(e) {
-    e.preventDefault();
-    this.setState({
-      value: ''
-    });
-  }
-
-  handleSubmit(e, value) {
-    const { onSubmit } = this.props;
-    onSubmit(e, value);
-    this.removeInputValue(e);
-  }
-
-  handleAddClick(e, value) {
-    const { onAddClick } = this.props;
-    onAddClick(e, value);
-    this.removeInputValue(e);
-  }
+  changeValue = value => {
+    store.dispatch(changeInput(value));
+  };
 
   render() {
-    const { value } = this.state;
+    const { onAdd } = this.props;
+    console.log(store.getState());
+
     return (
-      <Form onSubmit={e => this.handleSubmit(e, value)}>
+      <Form onSubmit={onAdd}>
         <Input
           type="text"
           placeholder="Todo Name"
           autoFocus
-          value={value}
-          onChange={e => this.handleChange(e.target.value)}
+          value={store.getState().inputText}
+          onChange={e => this.changeValue(e.target.value)}
         />
-        <ToDoButton onAddClick={e => this.handleAddClick(e, value)} />
+        <ToDoButton onClick={onAdd} />
       </Form>
     );
   }
 }
 
-ToDoInput.propTypes = {
-  onAddClick: func.isRequired,
-  onSubmit: func.isRequired
+TodoInput.propTypes = {
+  onAdd: func.isRequired
 };

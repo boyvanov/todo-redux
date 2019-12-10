@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
-import { func, string, number, bool } from 'prop-types';
-import { ItemWrap, Item, CheckBlock, RemoveButton, Label } from './styles';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { func, string, number, bool, shape } from 'prop-types';
+import { removeTodo, completeTodo } from '../../actions/todo';
+import {
+  ItemWrap,
+  Item,
+  CheckBlock,
+  RemoveButton,
+  Label,
+  Text
+} from './styles';
 
-export class ToDoItem extends Component {
-  shouldComponentUpdate(nextProps) {
-    const { checked } = this.props;
-
-    return checked !== nextProps.checked;
-  }
-
+class ToDoItem extends PureComponent {
   render() {
-    const { value, id, checked, onRemoveClick, onChecked } = this.props;
-    console.log('render');
+    const { todo, removeTodo, completeTodo } = this.props;
 
     return (
       <ItemWrap>
@@ -20,16 +22,16 @@ export class ToDoItem extends Component {
             <CheckBlock>
               <input
                 type="checkbox"
-                checked={checked}
-                onChange={() => onChecked(id)}
+                checked={todo.isCompleted}
+                onChange={() => completeTodo(todo.id)}
               />
             </CheckBlock>
-            <div>{value}</div>
+            <Text className={todo.isCompleted ? 'cross' : ''}>{todo.text}</Text>
           </Label>
           <RemoveButton
             className="remove"
             type="button"
-            onClick={() => onRemoveClick(id)}
+            onClick={() => removeTodo(todo.id)}
           >
             X
           </RemoveButton>
@@ -39,47 +41,37 @@ export class ToDoItem extends Component {
   }
 }
 
-ToDoItem.propTypes = {
-  value: string.isRequired,
-  checked: bool.isRequired,
-  id: number.isRequired,
-  onRemoveClick: func.isRequired,
-  onChecked: func.isRequired
+const mapStateToProps = (state, ownProps) => {
+  const { id } = ownProps;
+  const { todos } = state;
+  const findTodo = () => {
+    return todos.find(todo => todo.id === id);
+  };
+
+  return {
+    todo: findTodo(),
+    isCompleted: findTodo().isCompleted
+  };
 };
 
-// function ToDoItem({ value, id, checked, onRemoveClick, onChecked }) {
-//   console.log('render');
-//   return (
-//     <ItemWrap>
-//       <Item>
-//         <Label>
-//           <CheckBlock>
-//             <input
-//               type="checkbox"
-//               checked={checked}
-//               onChange={() => onChecked(id)}
-//             />
-//           </CheckBlock>
-//           <div>{value}</div>
-//         </Label>
-//         <RemoveButton
-//           className="remove"
-//           type="button"
-//           onClick={() => onRemoveClick(id)}
-//         >
-//           X
-//         </RemoveButton>
-//       </Item>
-//     </ItemWrap>
-//   );
-// }
+const mapDispatchToProps = {
+  removeTodo,
+  completeTodo
+};
 
-// ToDoItem.propTypes = {
-//   value: string.isRequired,
-//   checked: bool.isRequired,
-//   id: number.isRequired,
-//   onRemoveClick: func.isRequired,
-//   onChecked: func.isRequired
-// };
+export const TodoItem = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToDoItem);
 
-// export const ItemMemo = memo(ToDoItem);
+ToDoItem.propTypes = {
+  todo: shape({
+    id: number,
+    text: string,
+    isCompleted: bool
+  }).isRequired,
+  id: number.isRequired,
+  isCompleted: bool.isRequired,
+  removeTodo: func.isRequired,
+  completeTodo: func.isRequired
+};

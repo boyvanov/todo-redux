@@ -32,6 +32,12 @@ export const CheckBlock = styled.div`
   width: 60px;
 `;
 
+export const Text = styled.div`
+  &.cross {
+    text-decoration: line-through;
+  }
+`;
+
 export const RemoveButton = styled.button`
   background: transparent;
   border: none;
