@@ -1,13 +1,26 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { func, string } from 'prop-types';
-import { changeInput } from '../../actions/todo';
+import { func } from 'prop-types';
 import { ToDoButton } from '../todo-button/todo-button';
 import { Input, Form } from './styles';
+import { store } from '../../store';
+import { changeInput } from '../../actions/todo';
 
-class ToDoInput extends PureComponent {
+export class TodoInput extends PureComponent {
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(() => this.forceUpdate());
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  changeValue = value => {
+    store.dispatch(changeInput(value));
+  };
+
   render() {
-    const { onAdd, changeInput, inputText } = this.props;
+    const { onAdd } = this.props;
+    console.log(store.getState());
 
     return (
       <Form onSubmit={onAdd}>
@@ -15,8 +28,8 @@ class ToDoInput extends PureComponent {
           type="text"
           placeholder="Todo Name"
           autoFocus
-          value={inputText}
-          onChange={e => changeInput(e.target.value)}
+          value={store.getState().inputText}
+          onChange={e => this.changeValue(e.target.value)}
         />
         <ToDoButton onClick={onAdd} />
       </Form>
@@ -24,15 +37,6 @@ class ToDoInput extends PureComponent {
   }
 }
 
-export const TodoInput = connect(
-  state => ({
-    inputText: state.inputText
-  }),
-  { changeInput }
-)(ToDoInput);
-
-ToDoInput.propTypes = {
-  onAdd: func.isRequired,
-  changeInput: func.isRequired,
-  inputText: string.isRequired
+TodoInput.propTypes = {
+  onAdd: func.isRequired
 };
