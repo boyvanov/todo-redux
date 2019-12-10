@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 import React from 'react';
 import { render } from 'react-dom';
-import { App } from './App';
+import { App } from './components/app/App';
 import * as serviceWorker from './serviceWorker';
 
 render(<App />, document.getElementById('root'));

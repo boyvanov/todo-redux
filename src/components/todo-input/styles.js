@@ -11,6 +11,7 @@ export const Input = styled.input`
   color: inherit;
   flex: 1;
   background: #fff;
+  margin-left: 20px;
 `;
 
 export const Form = styled.form`

@@ -1,59 +1,38 @@
-import React, { Component } from 'react';
-import { func } from 'prop-types';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { func, string } from 'prop-types';
+import { changeInput } from '../../actions/todo';
 import { ToDoButton } from '../todo-button/todo-button';
 import { Input, Form } from './styles';
 
-export class ToDoInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: ''
-    };
-  }
-
-  handleChange(value) {
-    this.setState({
-      value
-    });
-  }
-
-  removeInputValue(e) {
-    e.preventDefault();
-    this.setState({
-      value: ''
-    });
-  }
-
-  handleSubmit(e, value) {
-    const { onSubmit } = this.props;
-    onSubmit(e, value);
-    this.removeInputValue(e);
-  }
-
-  handleAddClick(e, value) {
-    const { onAddClick } = this.props;
-    onAddClick(e, value);
-    this.removeInputValue(e);
-  }
-
+class ToDoInput extends PureComponent {
   render() {
-    const { value } = this.state;
+    const { onAdd, changeInput, inputText } = this.props;
+
     return (
-      <Form onSubmit={e => this.handleSubmit(e, value)}>
+      <Form onSubmit={onAdd}>
         <Input
           type="text"
           placeholder="Todo Name"
           autoFocus
-          value={value}
-          onChange={e => this.handleChange(e.target.value)}
+          value={inputText}
+          onChange={e => changeInput(e.target.value)}
         />
-        <ToDoButton onAddClick={e => this.handleAddClick(e, value)} />
+        <ToDoButton onClick={onAdd} />
       </Form>
     );
   }
 }
 
+export const TodoInput = connect(
+  state => ({
+    inputText: state.inputText
+  }),
+  { changeInput }
+)(ToDoInput);
+
 ToDoInput.propTypes = {
-  onAddClick: func.isRequired,
-  onSubmit: func.isRequired
+  onAdd: func.isRequired,
+  changeInput: func.isRequired,
+  inputText: string.isRequired
 };
