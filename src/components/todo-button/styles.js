@@ -6,9 +6,10 @@ export const AddButton = styled.button`
   font-weight: 300;
   color: inherit;
   cursor: pointer;
-  border: 1px solid transparent;
+  border: 1px solid;
   border-radius: 3px;
   outline: none;
-  font-size: 16px;
-  padding: 20px;
+  font-size: 24px;
+  padding: 10px;
+  margin: 0 10px;
 `;
