@@ -43,7 +43,8 @@ export const todos = (
           isCompleted
         };
       });
-      return editTodos;
+      return [...state, ...editTodos];
+
     default:
       return state;
   }

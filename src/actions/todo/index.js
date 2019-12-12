@@ -16,5 +16,5 @@ export {
   changeFilter,
   changeInput,
   cleanInput,
-  itemsFetchData
+  todosFetchData
 } from './actions';

@@ -58,7 +58,7 @@ export const todosFetchDataSuccess = (id, isCompleted, todos) => ({
   todos
 });
 
-export const itemsFetchData = url => dispatch => {
+export const todosFetchData = url => dispatch => {
   dispatch(todosIsLoading(true));
 
   fetch(url)
