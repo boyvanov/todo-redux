@@ -4,7 +4,10 @@ export {
   COMPLETE_TODO,
   CHANGE_FILTER,
   CHANGE_INPUT,
-  CLEAN_INPUT
+  CLEAN_INPUT,
+  TODOS_HAS_ERRORED,
+  TODOS_IS_LOADING,
+  FETCH_TODOS_SUCCESS
 } from './constants';
 export {
   addTodo,
@@ -12,5 +15,6 @@ export {
   completeTodo,
   changeFilter,
   changeInput,
-  cleanInput
+  cleanInput,
+  itemsFetchData
 } from './actions';

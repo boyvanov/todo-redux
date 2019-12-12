@@ -1,20 +1,13 @@
-import { createStore, compose, applyMiddleware } from 'redux';
-import { save } from 'redux-localstorage-simple';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { rootReducer } from './reducers/index';
 
-/* eslint-disable no-undef */
-const composeEnhancers =
-  process.env.NODE_ENV !== 'production' &&
-  typeof window === 'object' &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
-
-const configureStore = preloadedState =>
+const configureStore = initialState =>
   createStore(
     rootReducer,
-    preloadedState,
-    composeEnhancers(applyMiddleware(save({ namespace: 'todo-list' })))
+    initialState,
+    composeWithDevTools(applyMiddleware(thunk))
   );
 
-export const store = configureStore({});
+export const store = configureStore();

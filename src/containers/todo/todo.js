@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, arrayOf, object, string } from 'prop-types';
-import { addTodo, changeFilter, cleanInput } from '../../actions/todo';
+// import { addTodo, changeFilter, cleanInput } from '../../actions/todo';
+import { itemsFetchData, changeFilter } from '../../actions/todo';
 import { TodoInput } from '../../components/todo-input/todo-input';
 import { ToDoList } from '../../components/todo-list/todo-list';
 import { Footer } from '../../components/footer/footer';
@@ -11,12 +12,14 @@ class ToDo extends Component {
   handleAddClickAndPressKey = e => {
     e.preventDefault();
 
-    const { addTodo, inputText, cleanInput } = this.props;
+    const { itemsFetchData } = this.props;
 
-    if (!inputText) return;
+    itemsFetchData('http://5826ed963900d612000138bd.mockapi.io/items');
 
-    addTodo(new Date().getTime(), inputText, false);
-    cleanInput();
+    // if (!inputText) return;
+
+    // addTodo(new Date().getTime(), inputText, false);
+    // cleanInput();
   };
 
   render() {
@@ -39,7 +42,7 @@ class ToDo extends Component {
 }
 
 const mapStateToProps = state => {
-  const { todos, filter, inputText } = state;
+  const { todos, filter } = state;
   const filteredTodos = () => {
     switch (filter) {
       case 'completed':
@@ -58,15 +61,16 @@ const mapStateToProps = state => {
     state,
     todos: filteredTodos(),
     filter,
-    count: getTodosActiveCount(),
-    inputText
+    count: getTodosActiveCount()
+    // inputText
   };
 };
 
 const mapDispatchToProps = {
-  addTodo,
+  // addTodo,
   changeFilter,
-  cleanInput
+  // cleanInput,
+  itemsFetchData
 };
 
 export const Todo = connect(
@@ -86,5 +90,5 @@ export const Todo = connect(
 ToDo.propTypes = {
   todos: arrayOf(object).isRequired,
   filter: string.isRequired,
-  addTodo: func.isRequired
+  itemsFetchData: func.isRequired
 };
